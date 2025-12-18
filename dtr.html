@@ -19,21 +19,57 @@
             <button class="secondary" id="clear">Clear</button>
          </div>
     </div>
-    <div class="user-edit-inputs">
-  <label>ID Number: <input type="text" id="inputStaffID" placeholder="Enter Staff ID"></label>
-  <label>Employee Name: <input type="text" id="inputStaffName" placeholder="Enter Staff Name"></label>
-  <label>Hub Assignment: <input type="text" id="inputHubAssignment" placeholder="Enter Hub Assignment"></label>
-  <label>Mobile Number: <input type="text" id="inputMobileNumber" placeholder="Enter Mobile Number"></label>
-  <label>Period Coverage: <input type="text" id="inputPeriodCoverage" placeholder="Enter Period Coverage"></label>
-</div>
+    <div class="user-edit-inputs user-info-inputs">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="inputStaffID">ID Number</label>
+                <input type="text" id="inputStaffID" placeholder="Enter Staff ID">
+            </div>
+            <div class="form-group">
+                <label for="inputStaffName">Employee Name</label>
+                <input type="text" id="inputStaffName" placeholder="Enter Staff Name">
+            </div>
+            <div class="form-group">
+                <label for="inputHubAssignment">Hub Assignment</label>
+                <input type="text" id="inputHubAssignment" placeholder="Enter Hub Assignment">
+            </div>
+            <div class="form-group">
+                <label for="inputMobileNumber">Mobile Number</label>
+                <input type="text" id="inputMobileNumber" placeholder="Enter Mobile Number">
+            </div>
+            <div class="form-group">
+                <label for="inputPeriodCoverage">Period Coverage</label>
+                <input type="text" id="inputPeriodCoverage" placeholder="Enter Period Coverage">
+            </div>
+        </div>
+    </div>
 
-<div class="manual-time-input">
-  <label>Date: <input type="text" id="inputDate" value="7" placeholder="e.g., 21/11/2025"></label>
-  <label>Shift Start: <input type="text" value="1AM" id="inputShiftStart" placeholder="e.g., 1AM"></label>
-  <label>Shift End: <input type="text" value="10AM" id="inputShiftEnd" placeholder="e.g., 10AM"></label>
-  <label>Clock In: <input type="text" value="1:00" id="inputClockIn" placeholder="e.g., 1:00"></label>
-  <label>Clock Out: <input type="text" value="10:01" id="inputClockOut" placeholder="e.g., 10:00"></label>
-  <button id="addRowBtn">Add Row</button>
+<div class="manual-time-input time-inputs">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="inputDate">Date</label>
+                <input type="text" id="inputDate" value="7" placeholder="e.g., 21/11/2025">
+            </div>
+            <div class="form-group">
+                <label for="inputShiftStart">Shift Start</label>
+                <input type="text" value="1AM" id="inputShiftStart" placeholder="e.g., 1AM">
+            </div>
+            <div class="form-group">
+                <label for="inputShiftEnd">Shift End</label>
+                <input type="text" value="10AM" id="inputShiftEnd" placeholder="e.g., 10AM">
+            </div>
+            <div class="form-group">
+                <label for="inputClockIn">Clock In</label>
+                <input type="text" value="1:00" id="inputClockIn" placeholder="e.g., 1:00">
+            </div>
+            <div class="form-group">
+                <label for="inputClockOut">Clock Out</label>
+                <input type="text" value="10:01" id="inputClockOut" placeholder="e.g., 10:00">
+            </div>
+            <button id="addRowBtn">Add Row</button>
+        </div>
+    </div>
+  
 </div>
 
 
@@ -521,15 +557,14 @@ document.getElementById('print').addEventListener('click', () => {
 
 $(function() {
     const table = $(".time");
-    const footer = $(".time tr.footer");
+    const footer = $(".time tr.footers");
 
     // ===== Row Selection =====
-    table.on("click", "td", function() {
-        const tr = $(this).closest("tr");
-        if (tr.hasClass("footer") || tr.index() < 3) return; // skip footer & headers
+    table.on("click", "tr", function() {
+        if ($(this).hasClass("footer") || $(this).index() < 3) return; // skip footer & headers
 
         table.find("tr").removeClass("selected"); // remove previous highlight
-        tr.addClass("selected");
+        $(this).addClass("selected");
     });
 
     // Remove highlight when clicking outside
@@ -615,20 +650,24 @@ $("#addRowBtn").on("click", function() {
     $("#inputDate,#inputShiftStart,#inputShiftEnd,#inputClockIn,#inputClockOut").val("");
 });
 
-// ===== Delete Row Content & Remove Gap =====
-table.on("keydown", "td", function (e) {
-    const tr = $(this).closest("tr");
-    if (tr.hasClass("footer") || tr.index() < 3) return;
-
-    // Delete cell only
-    if (e.key === "Delete" && !e.ctrlKey) {
-        $(this).text("");
-    }
-
-    // Delete entire row
-    if (e.key === "Delete" && e.ctrlKey) {
-        tr.find("td").text("");
-        normalizeRows(); // NOW WORKS CORRECTLY
+// ===== Delete Selected Row =====
+$(document).on("keydown", function(e) {
+    if (e.key === "Delete") {
+        const selected = table.find("tr.selected");
+        if (selected.length) {
+            selected.remove();
+            // Add a new empty row to maintain 16 data rows
+            const newRow = $("<tr></tr>");
+            for (let i = 0; i < 14; i++) {
+                const td = $("<td></td>");
+                if (i === 1 || i === 7) {
+                    td.addClass("border-right");
+                }
+                newRow.append(td);
+            }
+            table.find("tr.footers").before(newRow);
+            e.preventDefault();
+        }
     }
 });
 
