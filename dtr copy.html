@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Time Record Overlay (A4 Landscape) - COMPLETE FIELDS</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <div class="box">
+    <div class="row">
+        <span id="file-name" style="margin-left:10px;">No file selected</span>
+          <input id="file" type="file" accept=".csv" style="display:none;" />
+         <div class="col">
+            <button id="upload">UPLOAD</button>
+            <button id="process">GENERATE</button>
+            <button id="print">Print</button>
+            <button class="secondary" id="clear">Clear</button>
+         </div>
+    </div>
+
+    <div id="summary" class="note"></div>
+    <div id="tableWrap"></div>
+  </div>
+    <div class="a4-container">
+        <div class="content">
+            <div class="header-logo">
+                <div class="logo-1">
+                    <img src="kakl.png" alt="Logo 1">
+                </div>
+                <div class="header-title">
+                    <div class="agency-name">
+                        KAKL LOGISTICS SERVICES
+                    </div>
+                    <div class="address">
+                        de lara  street, curva, bongabon, nueva ecija
+                    </div>
+                    <div class="document-title">
+                        DAILY TIME RECORD
+                    </div>
+                </div>
+                <div class="logo-2">
+                    <img src="shopee.png" alt="Logo 2">
+                </div>
+            </div>
+            <div class="user-info-wrap">
+                <table class="user-table">
+                    <tr>
+                        <th  style="width:69px;">ID NUMBER</th>
+                        <th style="width:230px;">EMPLOYEE NAME</th>
+                        <th style="width:150px;">HUB ASSIGNMENT</th>
+                        <th style="width:165px;">MOBILE NUMBER</th>
+                        <th>PERIOD COVERAGE</th>
+                    </tr>
+                    <tr>
+                        <td class="ops" ></td>
+                        <td ></td>
+                        <td ></td>
+                        <td ></td> 
+                        <td ></td>  
+                    </tr>
+                </table>
+                <div class="roles">
+                    <label><input type="checkbox"> Team Leader</label>
+                    <label><input type="checkbox"> Backroom</label>
+                    <label><input type="checkbox"> Coordinator</label>
+                </div>
+            </div>
+            <table class="time">
+                <!-- HEADER -->
+                <tr>
+                    <th rowspan="2" colspan="2" class="header border" style="width:69px;">DATE</th>
+                    <th colspan="6" class="header border" style="width:470px;">REGULAR WORKING HOURS</th>
+                    <th colspan="6" class="header border">EXTENDED WORKING HOURS</th>
+                </tr>
+                <tr>
+                    <th colspan="2" class="subheader" >OFFICIAL SCHEDULE</th>
+                    <th rowspan="2" class="subheader">TIME IN</th>
+                    <th rowspan="2" class="subheader" style="width:35px">TIME OUT</th>
+                    <th rowspan="2" class="subheader">NO. OF HRS<br>RENDERED</th>
+                    <th rowspan="2" class="subheader border-right">REMARKS</th>
+                    <th colspan="2" class="subheader">OVERTIME</th>
+                    <th rowspan="2" class="subheader">NO. OF HRS<br>RENDERED</th>
+                    <th rowspan="2" class="subheader">REMARKS</th>
+                    <th rowspan="2" class="subheader">REASON OF OVERTIME</th>
+                    <th rowspan="2" class="subheader">APPROVED BY</th>
+                </tr>
+                <tr class="border-bottom">
+                    <th class="subheader">
+                        <div class="date-box"><input type="checkbox"></div>
+                    </th>
+                    <th class="subheader border-right">
+                        <div class="date-box"><input type="checkbox"></div></th>
+                    <th class="subheader" style="width:35px">From</th>
+                    <th class="subheader " style="width:34px">To</th>
+                    <th class="subheader">From</th>
+                    <th class="subheader">To</th>
+                </tr>
+                <!-- FIRST DATA ROW WITH DATE CHECKBOXES -->
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr><tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <!-- ADD MORE ROWS BELOW (BLANK) -->
+                <!-- FOOTER -->
+                <tr>
+                    <td colspan="6" class="footer">TOTAL REGULAR WORKING HOURS RENDERED</td>
+                    <td colspan="1" class="footer"></td>
+                    <td colspan="1" class="footer"></td>
+                    <td colspan="5" class="footer">TOTAL HOURS OF OVERTIME RENDERED</td>
+                    <td colspan="1" class="footer"></td>  
+                </tr>
+            </table>
+            <div class="content-footer">
+                <div class="note">
+                    <div class="note-title">
+                        Notes to Employees:
+                    </div>
+                    <ol class="note-content">
+                        <li>This attendance form should be filled up completely by the employees</li>
+                        <li>Extended working hours should be as per Hub Assignment's request</li>
+                        <li>Overtime without necessary approval will not be payable to employees</li>
+                        <li>Write legibly, erasures and alterations may result to non-payment.</li>
+                    </ol>
+
+                </div>
+                <div class="signature">
+                <div class="signature-box employee-signature">
+                    <div class="label-name employee-name">Frehelson B. Bibe</div>
+                    <div class="label">Employee (Signature Over Printed Name)</div>
+                </div>
+                <div class="signature-box coor-signature">
+                    <div class="label-name coor-name"></div>
+                    <div class="label">Agency Coordinator (Signature Over Printed Name)</div>
+                </div>
+                <div class="signature-box coor-signature">
+                    <div class="label-name hub-coor-name"></div>
+                    <div class="label">Hub Coor/Hub Lead (Signature Over Printed Name)</div>
+                </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="a4-background"></div>
+    </div>
+<script>
+let attendanceJSON = [];
+
+$(function () {
+
+  // Trigger file upload
+  $("#upload").on("click", () => $("#file").click());
+
+  $("#file").on("change", function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    $("#file-name").text(file.name);
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const text = e.target.result;
+
+      // Split CSV into rows
+      const rows = text.split(/\r?\n/).filter(r => r.trim());
+      if (rows.length < 2) {
+        alert("CSV has no data rows!");
+        return;
+      }
+
+      // Normalize headers
+      const headers = rows[0].split(",").map(h => h.trim().toLowerCase());
+    // console.log("Headers:", headers);
+
+      // Helper: get column index by exact match first
+      const getColIndex = (name) => {
+        name = name.toLowerCase().trim();
+        let idx = headers.findIndex(h => h === name);
+        if (idx >= 0) return idx;
+        // fallback partial match
+        return headers.findIndex(h => h.includes(name));
+      };
+
+      // Map needed columns
+      const idxStaffId = getColIndex("staff id");
+      const idxStaffName = getColIndex("staff name");
+      const idxProfileStation = getColIndex("profile station");
+      const idxAgency = getColIndex("agency");
+      const idxShiftTime = getColIndex("shift name");
+      const idxClockIn = getColIndex("clock in time");
+      const idxClockOut = getColIndex("clock out time");
+
+      console.log("Column indexes:", {
+        idxStaffId,
+        idxStaffName,
+        idxProfileStation,
+        idxAgency,
+        idxClockIn,
+        idxClockOut
+      });
+
+      // Extract needed data
+      const data = rows.slice(1).map(row => {
+        const cols = row.split(",").map(c => c.trim());
+        return {
+          staffId: cols[idxStaffId] || "",
+          staffName: cols[idxStaffName] || "",
+          profileStation: cols[idxProfileStation] || "",
+          agency: cols[idxAgency] || "",
+          ShiftTime: cols[idxShiftTime] || "",
+          clockIn: cols[idxClockIn] || "",
+          clockOut: cols[idxClockOut] || ""
+        };
+      }).filter(r => r.clockIn && r.clockOut); // keep only rows with Clock In/Out
+
+      attendanceJSON = data.slice(0, 16); // limit to 16 rows
+      console.log("Filtered attendance data:", attendanceJSON);
+      alert(`${attendanceJSON.length} rows loaded (only needed columns, check console)`);
+    };
+    reader.readAsText(file);
+  });
+
+});
+</script>
+
+</body>
+</html>

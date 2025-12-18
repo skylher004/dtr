@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attendance Info</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; }
+  .info div { margin-bottom: 5px; }
+  table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+  th, td { border: 1px solid #333; padding: 8px; text-align: left; }
+</style>
+</head>
+<body>
+
+<h2>Upload Attendance CSV</h2>
+<input type="file" id="csvFile" accept=".csv">
+
+<div class="info" id="staffInfo"></div>
+
+<table id="attendanceTable">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Shift Start</th>
+      <th>Shift End</th>
+      <th>Clock In</th>
+      <th>Clock Out</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+document.getElementById('csvFile').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const text = e.target.result;
+        const rows = text.split('\n').map(r => r.split(',').map(c => c.trim()));
+        if (rows.length < 2) return;
+
+        // --- Staff Info ---
+        const first = rows[1];
+        const staffID = first[2] || "";        // C
+        const employeeName = first[3] || "";   // D
+        const hubAssignment = first[6] || "";  // G
+
+        // --- Period Coverage ---
+        const dateIndex = 0;
+        const dateList = rows.slice(1)
+            .map(r => r[dateIndex])
+            .filter(Boolean)
+            .map(d => new Date(d))
+            .sort((a,b) => a - b); // ASC
+
+        const fmt = { month: "short", day: "numeric" };
+        let coverage = "";
+        if (dateList.length) {
+            coverage =
+                dateList[0].toLocaleDateString("en-US", fmt) +
+                " - " +
+                dateList[dateList.length - 1].toLocaleDateString("en-US", fmt);
+        }
+
+        document.getElementById("staffInfo").innerHTML = `
+            <div><strong>ID Number:</strong> ${staffID}</div>
+            <div><strong>Employee Name:</strong> ${employeeName}</div>
+            <div><strong>Hub Assignment:</strong> ${hubAssignment}</div>
+            <div><strong>Period Coverage:</strong> ${coverage}</div>
+        `;
+
+        // --- Table ---
+        const tbody = document.querySelector("#attendanceTable tbody");
+        tbody.innerHTML = "";
+
+        // Only rows with both Clock In (X=23) and Clock Out (AC=28)
+        const attendanceRows = rows.slice(1)
+            .filter(r => r[dateIndex] && r[23] && r[28])
+            .sort((a,b) => new Date(a[dateIndex]) - new Date(b[dateIndex])); // ASC
+
+        attendanceRows.forEach(row => {
+            const rawDate = row[dateIndex];
+            const shiftStart = row[18] || ""; // S column
+            const shiftEnd = shiftStart ? calcShiftEnd(shiftStart) : "";
+            const clockIn = format12Hour(row[23]);   // X
+            const clockOut = format12Hour(row[28]);  // AC
+
+            const dateFormatted = rawDate
+                ? new Date(rawDate).toLocaleDateString("en-US", { month: "short", day: "numeric" })
+                : "";
+
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${dateFormatted}</td>
+                <td>${shiftStart}</td>
+                <td>${shiftEnd}</td>
+                <td>${clockIn}</td>
+                <td>${clockOut}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        // --- Functions ---
+        function calcShiftEnd(startTime) {
+    if (!startTime) return "";
+    let t = startTime.toLowerCase().trim();
+    if (t === "12mn") t = "12am"; // handle midnight
+    const match = t.match(/^(\d{1,2})(?::(\d{2}))?(am|pm)$/);
+    if (!match) return "";
+
+    let hour = parseInt(match[1]);
+    let min = parseInt(match[2] || "0");
+    const ampm = match[3];
+    if (ampm === "pm" && hour !== 12) hour += 12;
+    if (ampm === "am" && hour === 12) hour = 0;
+
+    const end = new Date();
+    end.setHours(hour + 9, min);
+
+    let h = end.getHours();
+    const m = end.getMinutes();
+    const endAMPM = h >= 12 ? "PM" : "AM";
+    h = h % 12 || 12;
+
+    // If minutes are 0, don't show them
+    return m === 0 ? `${h} ${endAMPM}` : `${h}:${String(m).padStart(2,"0")} ${endAMPM}`;
+}
+
+
+        function format12Hour(timeStr) {
+            if (!timeStr) return "";
+            const t = timeStr.trim();
+            // Handle HH:MM or HH:MM:SS format
+            const parts = t.split(":");
+            if (parts.length < 2) return timeStr;
+            let h = parseInt(parts[0]);
+            const m = parseInt(parts[1]);
+            const ampm = h >= 12 ? "PM" : "AM";
+            h = h % 12 || 12;
+            return `${h}:${String(m).padStart(2,"0")} ${ampm}`;
+        }
+    };
+
+    reader.readAsText(file);
+});
+</script>
+
+</body>
+</html>

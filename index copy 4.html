@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attendance Info</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f8f9fa;
+  }
+
+  h2 {
+    margin-bottom: 15px;
+  }
+
+  /* User Info Table */
+  .info-table {
+    width: 100%;
+    max-width: 800px;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .info-table th, .info-table td {
+    border: 1px solid #dee2e6;
+    padding: 10px 12px;
+    text-align: left;
+  }
+  .info-table th {
+    background-color: #343a40;
+    color: #fff;
+  }
+  .info-table tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+  }
+
+  /* Attendance Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  th, td {
+    border: 1px solid #dee2e6;
+    padding: 10px 12px;
+    text-align: left;
+  }
+  th {
+    background-color: #343a40;
+    color: #fff;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+  }
+  tbody tr:hover {
+    background-color: #e9ecef;
+  }
+
+  input[type="file"] {
+    margin-bottom: 15px;
+  }
+</style>
+</head>
+<body>
+
+<h2>Upload Attendance CSV</h2>
+<input type="file" id="csvFile" accept=".csv">
+
+<!-- User Info Table -->
+<table class="info-table" id="staffInfo">
+  <thead>
+    <tr>
+      <th>ID NUMBER</th>
+      <th>EMPLOYEE NAME</th>
+      <th>HUB ASSIGNMENT</th>
+      <th>PERIOD COVERAGE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td id="staffID"></td>
+      <td id="employeeName"></td>
+      <td id="hubAssignment"></td>
+      <td id="periodCoverage"></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Attendance Table -->
+<table id="attendanceTable">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Shift Start</th>
+      <th>Shift End</th>
+      <th>Clock In</th>
+      <th>Clock Out</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+document.getElementById('csvFile').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const text = e.target.result;
+    const rows = text.split('\n').map(r => r.split(',').map(c => c.trim()));
+    if (rows.length < 2) return;
+
+    // Staff Info
+    const first = rows[1];
+    const staffID = first[2] || "";
+    const employeeName = first[3] || "";
+    const hubAssignment = first[6] || "";
+
+    // Period Coverage
+    const dateIndex = 0;
+    const dateList = rows.slice(1)
+      .map(r => r[dateIndex])
+      .filter(Boolean)
+      .map(d => new Date(d))
+      .sort((a,b) => a - b);
+
+    const fmt = { month: "short", day: "numeric" };
+    let coverage = "";
+    if (dateList.length) {
+      coverage = dateList[0].toLocaleDateString("en-US", fmt) +
+                 " - " +
+                 dateList[dateList.length - 1].toLocaleDateString("en-US", fmt);
+    }
+
+    document.getElementById('staffID').textContent = staffID;
+    document.getElementById('employeeName').textContent = employeeName;
+    document.getElementById('hubAssignment').textContent = hubAssignment;
+    document.getElementById('periodCoverage').textContent = coverage;
+
+    // Attendance Table
+    const tbody = document.querySelector("#attendanceTable tbody");
+    tbody.innerHTML = "";
+
+    const attendanceRows = rows.slice(1)
+      .filter(r => r[dateIndex] && r[23] && r[28])
+      .sort((a,b) => new Date(a[dateIndex]) - new Date(b[dateIndex]));
+
+    attendanceRows.forEach(row => {
+      const rawDate = row[dateIndex];
+      const shiftStart = row[18] || "";
+      const shiftEnd = shiftStart ? calcShiftEnd(shiftStart) : "";
+      const clockIn = format12Hour(row[23]);
+      const clockOut = format12Hour(row[28]);
+
+      const dateFormatted = rawDate
+        ? new Date(rawDate).toLocaleDateString("en-US", { month: "short", day: "numeric" })
+        : "";
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${dateFormatted}</td>
+        <td>${shiftStart}</td>
+        <td>${shiftEnd}</td>
+        <td>${clockIn}</td>
+        <td>${clockOut}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+    
+
+    // --- Functions ---
+    function calcShiftEnd(startTime) {
+      if (!startTime) return "";
+      let t = startTime.toLowerCase().trim();
+      if (t === "12mn") t = "12am";
+      const match = t.match(/^(\d{1,2})(?::(\d{2}))?(am|pm)$/);
+      if (!match) return "";
+
+      let hour = parseInt(match[1]);
+      let min = parseInt(match[2] || "0");
+      const ampm = match[3];
+      if (ampm === "pm" && hour !== 12) hour += 12;
+      if (ampm === "am" && hour === 12) hour = 0;
+
+      const end = new Date();
+      end.setHours(hour + 9, min);
+
+      let h = end.getHours();
+      const m = end.getMinutes();
+      const endAMPM = h >= 12 ? "PM" : "AM";
+      h = h % 12 || 12;
+
+      return m === 0 ? `${h} ${endAMPM}` : `${h}:${String(m).padStart(2,"0")} ${endAMPM}`;
+    }
+
+    function format12Hour(timeStr) {
+      if (!timeStr) return "";
+      const t = timeStr.trim();
+      const parts = t.split(":");
+      if (parts.length < 2) return timeStr;
+      let h = parseInt(parts[0]);
+      const m = parseInt(parts[1]);
+      const ampm = h >= 12 ? "PM" : "AM";
+      h = h % 12 || 12;
+      return m === 0 ? `${h} ${ampm}` : `${h}:${String(m).padStart(2,"0")} ${ampm}`;
+    }
+  };
+
+  reader.readAsText(file);
+});
+</script>
+
+</body>
+</html>

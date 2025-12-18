@@ -1,0 +1,292 @@
+
+ /* --- Background Image Styling --- */
+        .a4-background {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            /* IMPORTANT: Use the actual reference ID for your uploaded image */
+            background-image: url('dtr.jpg'); 
+            
+            background-size: cover; 
+            background-repeat: no-repeat;
+            background-position: center center;
+            opacity: 0.3; 
+        }
+
+        /* --- Overlay Content Styling --- */
+        .a4-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            z-index: 10; 
+            font-family: 'Calibri-like', sans-serif; 
+        }
+        
+        /* Universal styling for all form elements/text in the overlay */
+        .overlay-text, .overlay-field {
+            position: absolute;
+            border: none;
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            color: black; 
+            font-weight: bold;
+            font-size: 8pt; /* Standard data entry size */
+        }
+        .overlay-field {
+            text-align: center;
+        }
+        
+        .overlay-checkbox {
+            position: absolute;
+            width: 13px;
+            height: 13px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            z-index: 15; /* Ensure clickability */
+            margin: 0;
+        }
+
+        /* Total Row Fields */
+        .total-field {
+            position: absolute;
+            border: none;
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            color: black; 
+            font-weight: bold;
+            font-size: 9pt;
+            text-align: center;
+        }
+        /* Signature Fields */
+        .signature-field {
+            position: absolute;
+            border: none;
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            color: black; 
+            font-weight: bold;
+            font-size: 10pt;
+            text-align: center;
+            border-bottom: 1px solid black; /* Simulates the signature line */
+        }
+
+        /* --- Print Styling (LANDSCAPE) --- */
+        @media print {
+            body { background-color: white; }
+            .a4-container {
+                width: 297mm;
+                height: 210mm;
+                margin: 0;
+                box-shadow: none;
+            }
+            .a4-background {
+                -webkit-print-color-adjust: exact; 
+                print-color-adjust: exact;
+            }
+            /* Hide the text in the background image on print, showing only the input data */
+            .a4-background {
+                opacity: 0.1; /* Or 0, if you only want the data */
+            }
+        }
+
+
+
+
+
+         <div class="col-time">
+                    <div class="col-times w-100 col-dates">
+                        <div class="col-label-times">
+                            DATE
+                        </div>
+                        <div class="col-date">
+                            <div class="col-checkbox-date"></div>
+                        </div>
+                    </div>
+                    <div class="col-times col-regular w-470">
+                        <div class="col-label-times">
+                            REGULAR WORKING HOURS
+                        </div>
+                        <div class="col-times-regular">
+                             <div class="col-times-officials w-180">
+                                <div class="col-label-officials">
+                                    OFFICIAL SCHEDULE
+                                </div>
+                                 <div class="col-times-official">
+                                     <div class="col-times-regular">From</div>
+                                     <div class="col-times-regular">To</div>
+                                 </div>
+
+                            </div>
+                            <div class="col-times-regular">
+                               <div class="col-label-regular">
+                                    TIME IN
+                                </div>
+                            </div>
+                            <div class="col-times-regular">
+                                <div class="col-label-regular">
+                                    TIME OUT
+                                </div>
+                            </div>
+                            <div class="col-times-regular">
+                                <div class="col-label-regular">
+                                    NO. OF HOURS
+                                    RENDERD
+                                </div>
+                            </div>
+                            <div class="col-times-regular">
+                                <div class="col-label-regular">
+                                    REMARKS
+                                </div>
+                            </div>
+                        </div>
+                         
+                    </div>
+                    <div class="col-times col-extend w-520">
+                        <div class="col-label-times">
+                            REGULAR WORKING HOURS
+                        </div>
+                    </div>
+                </div>
+
+
+
+                .w-520{
+    width: 520px;
+}
+.col-time{
+    display: flex;
+    flex-direction: row;
+    margin-top: 32px;
+    margin-left: 3px;
+}
+.col-times{
+    text-align: center;
+    border: 2px solid black;
+    margin-left: -2px;
+    box-sizing: border-box;
+}
+.col-label-times{
+    font-size: 10pt;
+    font-weight: bold;
+    letter-spacing: 0.5px; /* adjust to your liking */
+}
+.col-times-regular{
+    display: flex;
+    flex-direction: row;
+}
+.col-times-regular{
+    white-space: nowrap;
+}
+.col-times-officials{
+    display: flex;
+    flex-direction: column;
+}
+.col-times-official{
+    display: flex;
+    flex-direction: row;
+}
+.col-label-officials{
+    font-size: 10pt;
+    font-weight: bold;
+    letter-spacing: 0.5px; /* adjust to your liking */
+}
+.w-180{
+    width: 180px;
+}
+
+
+<div class="user-info">
+                <div class="col w-100">
+                    <div class="col-label">ID NUMBER</div>
+                    <div class="ID-NUMBER">OPS269955</div>
+                </div>
+                <div class="col w-229">
+                    <div class="col-label">EMPLOYEE NAME</div>
+                    <div class="EMPLOYEE NAME">FREHELSON B. BIBE</div>
+                </div>
+                <div class="col  w-152">
+                    <div class="col-label">HUB ASSIGNMENT</div>
+                    <div class="HUB-ASSIGNMENT">TALAVERA HUB</div>
+                </div>
+                <div class="col w-172">
+                    <div class="col-label">MOBILE NUMBER</div>
+                    <div class="MOBILE-NUMBER">09454319340</div>
+                </div>
+                <div class="col w-250">
+                    <div class="col-label">PERIOD COVERAGE</div>
+                    <div class="PERIOD-COVERAGE"></div>
+                </div>
+                <div class="col-position">
+
+                </div>
+
+            </div>
+
+
+
+            .w-100{
+    width: 72px;
+}
+.w-229{
+    width: 240px;
+}
+.w-152{
+    width: 156px;  
+}
+.w-172{
+    width: 170px;
+}
+.w-250{
+    width: 260px;
+}
+.w-470{
+    width: 474px;
+}
+
+.user-info{
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    padding: 0 3px;
+}
+.col{
+    height: 38px;
+    font-weight: bold;
+    font-size: 12pt;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    margin-left: -2px;
+    padding-top: 2px;
+    text-align: center;
+    box-sizing: border-box;
+    overflow: hidden;
+    
+}
+.ID-NUMBER{
+    font-size: 11pt;
+    font-weight: bold;
+    letter-spacing: -0.5px; /* adjust to your liking */
+}
+.col-label{
+    white-space: nowrap;
+    font-size: 8.6pt;
+    font-weight: 600; /* semi-bold */
+    letter-spacing: 0.5px; /* adjust to your liking */
+    margin-bottom: -2px;
+}
+document.getElementById('print').addEventListener('click', () => {
+    window.print();

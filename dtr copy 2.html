@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Time Record Overlay (A4 Landscape) - COMPLETE FIELDS</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <div class="box">
+    <div class="row">
+        <span id="file-name" style="margin-left:10px;">No file selected</span>
+          <input id="file" type="file" accept=".csv" style="display:none;" />
+         <div class="col">
+            <button id="upload">UPLOAD</button>
+            <button id="process">GENERATE</button>
+            <button id="print">Print</button>
+            <button class="secondary" id="clear">Clear</button>
+         </div>
+    </div>
+    <div class="user-edit-inputs">
+  <label>ID Number: <input type="text" id="inputStaffID" placeholder="Enter Staff ID"></label>
+  <label>Employee Name: <input type="text" id="inputStaffName" placeholder="Enter Staff Name"></label>
+  <label>Hub Assignment: <input type="text" id="inputHubAssignment" placeholder="Enter Hub Assignment"></label>
+  <label>Mobile Number: <input type="text" id="inputMobileNumber" placeholder="Enter Mobile Number"></label>
+  <label>Period Coverage: <input type="text" id="inputPeriodCoverage" placeholder="Enter Period Coverage"></label>
+</div>
+
+<div class="manual-time-input">
+  <label>Date: <input type="text" id="inputDate" value="7" placeholder="e.g., 21/11/2025"></label>
+  <label>Shift Start: <input type="text" value="1AM" id="inputShiftStart" placeholder="e.g., 1AM"></label>
+  <label>Shift End: <input type="text" value="10AM" id="inputShiftEnd" placeholder="e.g., 10AM"></label>
+  <label>Clock In: <input type="text" value="1:00" id="inputClockIn" placeholder="e.g., 1:00"></label>
+  <label>Clock Out: <input type="text" value="10:01" id="inputClockOut" placeholder="e.g., 10:00"></label>
+  <button id="addRowBtn">Add Row</button>
+</div>
+
+
+
+    <div id="summary" class="note"></div>
+    <div id="tableWrap"></div>
+  </div>
+    <div class="a4-container">
+        <div class="content">
+            <div class="header-logo">
+                <div class="logo-1">
+                    <img src="kakl.png" alt="Logo 1">
+                </div>
+                <div class="header-title">
+                    <div class="agency-name">
+                        KAKL LOGISTICS SERVICES
+                    </div>
+                    <div class="address">
+                        de lara  street, curva, bongabon, nueva ecija
+                    </div>
+                    <div class="document-title">
+                        DAILY TIME RECORD
+                    </div>
+                </div>
+                <div class="logo-2">
+                    <img src="shopee.png" alt="Logo 2">
+                </div>
+            </div>
+            <div class="user-info-wrap">
+                <table class="user-table">
+                    <tr>
+                        <th  style="width:69px;">ID NUMBER</th>
+                        <th style="width:230px;">EMPLOYEE NAME</th>
+                        <th style="width:150px;">HUB ASSIGNMENT</th>
+                        <th style="width:165px;">MOBILE NUMBER</th>
+                        <th>PERIOD COVERAGE</th>
+                    </tr>
+                    <tr>
+                        <td class="ops" ></td>
+                        <td ></td>
+                        <td ></td>
+                        <td ></td> 
+                        <td ></td>  
+                    </tr>
+                </table>
+                <div class="roles">
+                    <label><input type="checkbox"> Team Leader</label>
+                    <label><input type="checkbox"> Backroom</label>
+                    <label><input type="checkbox"> Coordinator</label>
+                </div>
+            </div>
+            <table class="time">
+                <!-- HEADER -->
+                <tr>
+                    <th rowspan="2" colspan="2" class="header border" style="width:69px;">DATE</th>
+                    <th colspan="6" class="header border" style="width:470px;">REGULAR WORKING HOURS</th>
+                    <th colspan="6" class="header border">EXTENDED WORKING HOURS</th>
+                </tr>
+                <tr>
+                    <th colspan="2" class="subheader" >OFFICIAL SCHEDULE</th>
+                    <th rowspan="2" class="subheader">TIME IN</th>
+                    <th rowspan="2" class="subheader" style="width:35px">TIME OUT</th>
+                    <th rowspan="2" class="subheader">NO. OF HRS<br>RENDERED</th>
+                    <th rowspan="2" class="subheader border-right">REMARKS</th>
+                    <th colspan="2" class="subheader">OVERTIME</th>
+                    <th rowspan="2" class="subheader">NO. OF HRS<br>RENDERED</th>
+                    <th rowspan="2" class="subheader">REMARKS</th>
+                    <th rowspan="2" class="subheader">REASON OF OVERTIME</th>
+                    <th rowspan="2" class="subheader">APPROVED BY</th>
+                </tr>
+                <tr class="border-bottom">
+                    <th class="subheader">
+                        <div class="date-box"><input type="checkbox"></div>
+                    </th>
+                    <th class="subheader border-right">
+                        <div class="date-box"><input type="checkbox"></div></th>
+                    <th class="subheader" style="width:35px">From</th>
+                    <th class="subheader " style="width:34px">To</th>
+                    <th class="subheader">From</th>
+                    <th class="subheader">To</th>
+                </tr>
+                <!-- FIRST DATA ROW WITH DATE CHECKBOXES -->
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr><tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td class="border-right"></td><td></td><td></td><td ></td><td></td><td></td>
+                    <td class="border-right"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <!-- ADD MORE ROWS BELOW (BLANK) -->
+                <!-- FOOTER -->
+                <tr>
+                    <td colspan="6" class="footer">TOTAL REGULAR WORKING HOURS RENDERED</td>
+                    <td colspan="1" class="footer"></td>
+                    <td colspan="1" class="footer"></td>
+                    <td colspan="5" class="footer">TOTAL HOURS OF OVERTIME RENDERED</td>
+                    <td colspan="1" class="footer"></td>  
+                </tr>
+            </table>
+            <div class="content-footer">
+                <div class="note">
+                    <div class="note-title">
+                        Notes to Employees:
+                    </div>
+                    <ol class="note-content">
+                        <li>This attendance form should be filled up completely by the employees</li>
+                        <li>Extended working hours should be as per Hub Assignment's request</li>
+                        <li>Overtime without necessary approval will not be payable to employees</li>
+                        <li>Write legibly, erasures and alterations may result to non-payment.</li>
+                    </ol>
+
+                </div>
+                <div class="signature">
+                <div class="signature-box employee-signature">
+                    <div class="label-name employee-name"></div>
+                    <div class="label">Employee (Signature Over Printed Name)</div>
+                </div>
+                <div class="signature-box coor-signature">
+                    <div class="label-name coor-name"></div>
+                    <div class="label">Agency Coordinator (Signature Over Printed Name)</div>
+                </div>
+                <div class="signature-box coor-signature">
+                    <div class="label-name hub-coor-name"></div>
+                    <div class="label">Hub Coor/Hub Lead (Signature Over Printed Name)</div>
+                </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="a4-background"></div>
+    </div>
+
+
+<script>
+let attendanceJSON = [];
+
+$(function () {
+
+  // Trigger file upload
+  $("#upload").on("click", () => $("#file").click());
+
+  $("#file").on("change", function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    $("#file-name").text(file.name);
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const text = e.target.result;
+
+      // Split CSV into rows
+      const rows = text.split(/\r?\n/).filter(r => r.trim());
+      if (rows.length < 2) {
+        alert("CSV has no data rows!");
+        return;
+      }
+
+      // Normalize headers
+      const headers = rows[0].split(",").map(h => h.trim().toLowerCase());
+      console.log("Headers:", headers);
+
+      // Helper: get column index by exact match first, fallback partial
+      const getColIndex = (name) => {
+        name = name.toLowerCase().trim();
+        let idx = headers.findIndex(h => h === name);
+        if (idx >= 0) return idx;
+        return headers.findIndex(h => h.includes(name));
+      };
+
+      // Map needed columns
+      const idxStaffId = getColIndex("staff id");
+      const idxStaffName = getColIndex("staff name");
+      const idxProfileStation = getColIndex("profile station");
+      const idxAgency = getColIndex("agency");
+      const idxSDate = getColIndex("date");
+      const idxClockIn = getColIndex("clock in time");
+      const idxClockOut = getColIndex("clock out time");
+      const idxShiftStartTime = getColIndex("shift name"); // or "shift start"
+      const idxPosition = getColIndex("profile department");
+
+      console.log("Column indexes:", {
+        idxStaffId,
+        idxStaffName,
+        idxProfileStation,
+        idxAgency,
+        idxSDate,
+        idxClockIn,
+        idxClockOut,
+        idxShiftStartTime,
+        idxPosition
+      });
+
+      // Extract needed data
+      const data = rows.slice(1).map(row => {
+        const cols = row.split(",").map(c => c.trim());
+        return {
+          staffId: cols[idxStaffId] || "",
+          staffName: cols[idxStaffName] || "",
+          profileStation: cols[idxProfileStation] || "",
+          agency: cols[idxAgency] || "",
+          clockIn: cols[idxClockIn] || "",
+          clockOut: cols[idxClockOut] || "",
+          shiftStart: cols[idxShiftStartTime] || "",
+          date: cols[idxSDate] || "",
+          position: cols[idxPosition] || ""
+        };
+      }).filter(r => r.clockIn && r.clockOut && r.date);
+
+      attendanceJSON = data.slice(0, 16); // limit to 16 rows
+      console.log("Filtered attendance data:", attendanceJSON);
+      alert(`${attendanceJSON.length} rows loaded (check console)`);
+
+      // Fill the DTR table
+      fillDTR(attendanceJSON);
+    };
+    reader.readAsText(file);
+  });
+
+});
+
+/* ================= HELPERS ================= */
+function parseCSVDate(str) {
+    if (!str) return null;
+    str = str.trim();
+
+    // DD/MM/YYYY format
+    const parts = str.split("/");
+    if (parts.length === 3) {
+        const day = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10) - 1; // zero-based month
+        const year = parseInt(parts[2], 10);
+        return new Date(year, month, day);
+    }
+    return null;
+}
+
+function calcShift(shiftStart) {
+    if (!shiftStart) return {from:"", to:""};
+
+    let t = shiftStart.trim().toUpperCase();
+
+    // Normalize 12MN to 12AM
+    if (t === "12MN") t = "12AM";
+
+    // Match hours and minutes with optional AM/PM
+    const m = t.match(/^(\d{1,2})(?::(\d{2}))?\s*(AM|PM)?$/);
+    if (!m) return {from: shiftStart, to:""};
+
+    let hour = parseInt(m[1],10);
+    let min = parseInt(m[2]||"0",10);
+    const ampm = m[3] || "AM";
+
+    // Convert 12-hour to 24-hour
+    if (ampm === "PM" && hour !== 12) hour += 12;
+    if (ampm === "AM" && hour === 12) hour = 0;
+
+    const startDate = new Date();
+    startDate.setHours(hour, min, 0, 0);
+
+    // Shift end = +9 hours (1-hour break included)
+    const endDate = new Date(startDate.getTime() + 9*60*60*1000);
+
+    // Format to 12-hour with AM/PM
+    const format12 = dt => {
+        let hh = dt.getHours();
+        const mm = dt.getMinutes();
+        const am = hh >= 12 ? "PM" : "AM";
+        hh = hh % 12 || 12;
+        return mm === 0 ? `${hh} ${am}` : `${hh}:${String(mm).padStart(2,"0")} ${am}`;
+    };
+
+    return {from: shiftStart, to: format12(endDate)};
+}
+function formatClockTimeWithAmPm(timeStr, hideAmPm = true) {
+    if (!timeStr) return "";
+
+    const t = timeStr.trim();
+    const parts = t.split(":");
+    if (parts.length < 2) return t;
+
+    let hour = parseInt(parts[0], 10);
+    const min = parseInt(parts[1], 10);
+
+    let ampm = "AM";
+    if (hour >= 12) ampm = "PM";
+    hour = hour % 12 || 12; // convert 0 -> 12
+
+    const mm = String(min).padStart(2, "0");
+
+    return hideAmPm ? `${hour}:${mm}` : `${hour}:${mm} ${ampm}`;
+}
+function checkRoles(profileDept) {
+    if (!profileDept) return;
+
+    // Convert to array in case multiple roles are comma-separated
+    const roles = profileDept.split(",").map(r => r.trim().toLowerCase());
+
+    $(".roles label").each(function() {
+        const labelText = $(this).text().trim().toLowerCase();
+        if (roles.includes(labelText)) {
+            $(this).find("input[type=checkbox]").prop("checked", true);
+        } else {
+            $(this).find("input[type=checkbox]").prop("checked", false);
+        }
+    });
+}
+
+
+/* ================= FILL DTR ================= */
+function fillDTR(data) {
+  if (!data.length) return;
+
+  // --- Parse and sort dates ---
+  let parsedData = data.map(r => {
+    return {
+      ...r,
+      dateObj: parseCSVDate(r.date)
+    };
+  }).filter(r => r.dateObj).sort((a,b)=>a.dateObj - b.dateObj);
+
+  // --- Remove duplicate dates, keep earliest clock-in & latest clock-out ---
+  let uniqueData = [];
+  let dateMap = {};
+  parsedData.forEach(r => {
+    const dayKey = r.dateObj.toDateString();
+    if (!dateMap[dayKey]) {
+      dateMap[dayKey] = { ...r }; // first occurrence
+    } else {
+      // update earliest clock-in
+      if (r.clockIn < dateMap[dayKey].clockIn) dateMap[dayKey].clockIn = r.clockIn;
+      // update latest clock-out
+      if (r.clockOut > dateMap[dayKey].clockOut) dateMap[dayKey].clockOut = r.clockOut;
+    }
+  });
+
+  uniqueData = Object.values(dateMap);
+
+  // --- Fill period coverage ---
+  const dateList = uniqueData.map(r => r.dateObj);
+  if (dateList.length) {
+    const start = dateList[0];
+    const end = dateList[dateList.length-1];
+    const fmtMonth = { month: "short" };
+    const periodCoverage = `${start.toLocaleDateString("en-US", fmtMonth).toUpperCase()} ${start.getDate()} - ${end.toLocaleDateString("en-US", fmtMonth).toUpperCase()} ${end.getDate()}`;
+    $(".user-table td:eq(4)").text(periodCoverage);
+     $("#inputPeriodCoverage").val(periodCoverage); // calculate from CSV dates
+  }
+
+  // --- Employee Info ---
+    $(".user-table td:eq(0)").text(uniqueData[0].staffId);
+    $(".user-table td:eq(1)").text(uniqueData[0].staffName);
+    $(".user-table td:eq(2)").text(uniqueData[0].profileStation);
+    $(".employee-name").text(uniqueData[0].staffName);
+
+    $("#inputStaffID").val(uniqueData[0].staffId);
+    $("#inputStaffName").val(uniqueData[0].staffName);
+    $("#inputHubAssignment").val(uniqueData[0].profileStation);
+    $("#inputMobileNumber").val(uniqueData[0].mobile);
+   
+
+ // $(".user-table td:eq(3)").text(uniqueData[0].position);
+// --- Check Roles ---
+checkRoles(uniqueData[0].position);
+  // --- Fill DTR table ---
+  const rows = $(".time tr").slice(3, 19); // first 16 rows
+
+
+  rows.each(function(i){
+    const r = uniqueData[i];
+    if (!r) return;
+
+    const shift = calcShift(r.shiftStart);
+    const dt = r.dateObj;
+    const dayNumber = dt.getDate();
+
+    $(this).find("td:eq(0)").text(dayNumber);                                      // Date
+    $(this).find("td:eq(2)").text(shift.from);                                    // Shift Start
+    $(this).find("td:eq(3)").text(shift.to);                                      // Shift End
+    $(this).find("td:eq(4)").text(formatClockTimeWithAmPm(r.clockIn, true));      // Clock In
+    $(this).find("td:eq(5)").text(formatClockTimeWithAmPm(r.clockOut, true));     // Clock Out
+});
+
+
+
+
+}
+
+
+$(".name").on("input", function() {
+    const val = $(this).text().trim();
+    $(".employee-name").text(val); // update signature box
+});
+
+// ID Number
+$("#inputStaffID").on("input", function() {
+    $(".user-table td:eq(0)").text($(this).val());
+});
+
+// Employee Name
+$("#inputStaffName").on("input", function() {
+    const val = $(this).val();
+    $(".user-table td:eq(1)").text(val);
+    $(".employee-name").text(val); // also update signature
+});
+
+// Hub Assignment
+$("#inputHubAssignment").on("input", function() {
+    $(".user-table td:eq(2)").text($(this).val());
+});
+
+// Mobile Number
+$("#inputMobileNumber").on("input", function() {
+    $(".user-table td:eq(3)").text($(this).val());
+});
+
+// Period Coverage
+$("#inputPeriodCoverage").on("input", function() {
+    $(".user-table td:eq(4)").text($(this).val());
+});
+
+
+document.getElementById('print').addEventListener('click', () => {
+    window.print();
+});
+
+$(function() {
+
+  let selectedRow = null; // currently selected row
+
+  // ===== Single click: select row =====
+  $(".time").on("click", "td", function(e) {
+    // Skip header rows
+    if ($(this).closest("tr").index() < 3) return;
+
+    // Highlight this row
+    $(".time tr").removeClass("selected-row");
+    selectedRow = $(this).closest("tr");
+    selectedRow.addClass("selected-row");
+
+    e.stopPropagation(); // prevent triggering document click
+  });
+
+  // ===== Double click: edit cell =====
+  $(".time").on("dblclick", "td", function(e) {
+    if ($(this).closest("tr").index() < 3) return;
+
+    if ($(this).find("input").length) return;
+
+    const currentText = $(this).text();
+    const input = $("<input type='text'>").val(currentText).css({
+      width: "100%",
+      border: "0",
+      padding: "0",
+      margin: "0",
+      outline: "none",
+      textAlign: "center",
+      textTransform: "uppercase",
+      boxSizing: "border-box",
+      backgroundColor: "#ffffe0" // highlight editable cell
+    });
+
+    $(this).html(input);
+    input.focus();
+
+    input.on("blur keydown", function(e) {
+      if (e.type === "blur" || e.key === "Enter") {
+        const val = $(this).val();
+        $(this).parent().text(val);
+      }
+    });
+
+    e.stopPropagation();
+  });
+
+  // ===== Click outside table removes highlight =====
+  $(document).on("click", function() {
+    $(".time tr").removeClass("selected-row");
+    selectedRow = null;
+  });
+
+  // ===== Add row manually =====
+  $("#addRowBtn").on("click", function() {
+    const date = $("#inputDate").val();
+    const shiftStart = $("#inputShiftStart").val();
+    const shiftEnd = $("#inputShiftEnd").val();
+    const clockIn = $("#inputClockIn").val();
+    const clockOut = $("#inputClockOut").val();
+
+    if (!date && !shiftStart && !shiftEnd && !clockIn && !clockOut) return;
+
+    const table = $(".time");
+    const dataRows = table.find("tr").slice(3); // skip headers
+
+    let inserted = false;
+    dataRows.each(function() {
+      let empty = true;
+      $(this).find("td").each(function() {
+        if ($(this).text().trim() !== "") empty = false;
+      });
+
+      if (empty && !inserted) {
+        const tds = $(this).find("td");
+        tds.eq(0).text(date);          
+        tds.eq(1).text("");            
+        tds.eq(2).text(shiftStart);    
+        tds.eq(3).text(shiftEnd);      
+        tds.eq(4).text(clockIn);       
+        tds.eq(5).text(clockOut);      
+        inserted = true;
+      }
+    });
+
+    if (!inserted) {
+      const newRow = $("<tr></tr>");
+      newRow.html(`
+        <td>${date}</td>
+        <td class="border-right"></td>
+        <td>${shiftStart}</td>
+        <td>${shiftEnd}</td>
+        <td>${clockIn}</td>
+        <td>${clockOut}</td>
+        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+      `);
+      table.append(newRow);
+    }
+
+    $("#inputDate,#inputShiftStart,#inputShiftEnd,#inputClockIn,#inputClockOut").val("");
+  });
+
+  // ===== Delete row or cell =====
+  $(document).on("keydown", function(e) {
+    if (e.key === "Delete") {
+      if ($("input:focus").length) {
+        $("input:focus").val("");
+      } else if (selectedRow) {
+        selectedRow.find("td").text("");
+      }
+    }
+  });
+
+  // Optional CSS for selected row
+  $("<style>")
+    .prop("type", "text/css")
+    .html(".selected-row { background-color: #d3f4ff !important; }")
+    .appendTo("head");
+
+});
+
+</script>
+
+</body>
+</html>
