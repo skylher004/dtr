@@ -44,96 +44,48 @@
         </div>
     </div>
 
-<div class="manual-time-input time-inputs">
-    <!-- Desktop/Tablet Large: All in one row -->
-    <div class="form-row desktop-row">
-        <div class="form-group">
-            <label for="inputDate">Date</label>
-            <input type="text" id="inputDate" value="7" placeholder="e.g., 21/11/2025">
-        </div>
-        <div class="form-group">
-            <label for="inputShiftStart">Shift Start</label>
-            <input type="text" value="1AM" id="inputShiftStart" placeholder="e.g., 1AM">
-        </div>
-        <div class="form-group">
-            <label for="inputShiftEnd">Shift End</label>
-            <input type="text" value="10AM" id="inputShiftEnd" placeholder="e.g., 10AM">
-        </div>
-        <div class="form-group">
-            <label for="inputClockIn">Clock In</label>
-            <input type="text" value="1:00" id="inputClockIn" placeholder="e.g., 1:00">
-        </div>
-        <div class="form-group">
-            <label for="inputClockOut">Clock Out</label>
-            <input type="text" value="10:01" id="inputClockOut" placeholder="e.g., 10:00">
-        </div>
-        <button id="addRowBtn">Add Row</button>
+    <div class="time-inputs">
+
+  <!-- Row container -->
+  <div class="time-row">
+
+    <!-- Date / Shift -->
+    <div class="group top-row">
+      <div class="form-group">
+        <label for="inputDate">Date</label>
+        <input type="text" id="inputDate" value="7" placeholder="e.g., 21/11/2025">
+      </div>
+      <div class="form-group">
+        <label for="inputShiftStart">Shift Start</label>
+        <input type="text" value="1AM" id="inputShiftStart">
+      </div>
+      <div class="form-group">
+        <label for="inputShiftEnd">Shift End</label>
+        <input type="text" value="10AM" id="inputShiftEnd">
+      </div>
     </div>
 
-    <!-- Tablet: Date/Shift in one row, Clock/Button in another -->
-    <div class="form-row tablet-row1">
-        <div class="form-group">
-            <label for="inputDate">Date</label>
-            <input type="text" id="inputDate" value="7" placeholder="e.g., 21/11/2025">
-        </div>
-        <div class="form-group">
-            <label for="inputShiftStart">Shift Start</label>
-            <input type="text" value="1AM" id="inputShiftStart" placeholder="e.g., 1AM">
-        </div>
-        <div class="form-group">
-            <label for="inputShiftEnd">Shift End</label>
-            <input type="text" value="10AM" id="inputShiftEnd" placeholder="e.g., 10AM">
-        </div>
-    </div>
-    <div class="form-row tablet-row2">
-        <div class="form-group">
-            <label for="inputClockIn">Clock In</label>
-            <input type="text" value="1:00" id="inputClockIn" placeholder="e.g., 1:00">
-        </div>
-        <div class="form-group">
-            <label for="inputClockOut">Clock Out</label>
-            <input type="text" value="10:01" id="inputClockOut" placeholder="e.g., 10:00">
-        </div>
+    <!-- Clock / Button -->
+    <div class="group bottom-row">
+      <div class="form-group">
+        <label for="inputClockIn">Clock In</label>
+        <input type="text" value="1:00" id="inputClockIn">
+      </div>
+      <div class="form-group">
+        <label for="inputClockOut">Clock Out</label>
+        <input type="text" value="10:01" id="inputClockOut">
+      </div>
+      <div class="form-group">
         <button id="addRowBtn">Add Row</button>
+      </div>
     </div>
 
-    <!-- Mobile: Each in separate rows -->
-    <div class="form-row mobile-date">
-        <div class="form-group">
-            <label for="inputDate">Date</label>
-            <input type="text" id="inputDate" value="7" placeholder="e.g., 21/11/2025">
-        </div>
-    </div>
-    <div class="form-row mobile-shift">
-        <div class="form-group">
-            <label for="inputShiftStart">Shift Start</label>
-            <input type="text" value="1AM" id="inputShiftStart" placeholder="e.g., 1AM">
-        </div>
-        <div class="form-group">
-            <label for="inputShiftEnd">Shift End</label>
-            <input type="text" value="10AM" id="inputShiftEnd" placeholder="e.g., 10AM">
-        </div>
-    </div>
-    <div class="form-row mobile-clock">
-        <div class="form-group">
-            <label for="inputClockIn">Clock In</label>
-            <input type="text" value="1:00" id="inputClockIn" placeholder="e.g., 1:00">
-        </div>
-        <div class="form-group">
-            <label for="inputClockOut">Clock Out</label>
-            <input type="text" value="10:01" id="inputClockOut" placeholder="e.g., 10:00">
-        </div>
-    </div>
-    <div class="form-row mobile-button">
-        <button id="addRowBtn">Add Row</button>
-    </div>
-</div>
-  
+  </div>
 </div>
 
 
+</div>
 
-    <div id="summary" class="note"></div>
     <div id="tableWrap"></div>
   </div>
     <div class="a4-container">
@@ -411,8 +363,8 @@ function parseCSVDate(str) {
     if (!str) return null;
     str = str.trim();
 
-    // DD/MM/YYYY format
-    const parts = str.split("/");
+    // DD/MM/YYYY or DD-MM-YYYY format
+    const parts = str.split(/[-\/]/);
     if (parts.length === 3) {
         const day = parseInt(parts[0], 10);
         const month = parseInt(parts[1], 10) - 1; // zero-based month
