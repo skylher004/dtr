@@ -426,6 +426,11 @@ button.secondary{
     white-space: nowrap;
 }
 
+/* Hide specific rows by default */
+.tablet-row1, .tablet-row2, .mobile-date, .mobile-shift, .mobile-clock, .mobile-button {
+    display: none;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .form-row {
@@ -438,6 +443,40 @@ button.secondary{
     .form-row button {
         margin-top: 0;
         align-self: stretch;
+    }
+    /* Mobile layout */
+    .desktop-row, .tablet-row1, .tablet-row2 {
+        display: none;
+    }
+    .mobile-date, .mobile-shift, .mobile-clock, .mobile-button {
+        display: flex;
+    }
+    /* Override for rows that should be horizontal */
+    .mobile-shift, .mobile-clock {
+        flex-direction: row;
+    }
+    .mobile-shift .form-group, .mobile-clock .form-group {
+        flex: 1;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Tablet layout */
+    .desktop-row, .mobile-date, .mobile-shift, .mobile-clock, .mobile-button {
+        display: none;
+    }
+    .tablet-row1, .tablet-row2 {
+        display: flex;
+    }
+}
+
+@media (min-width: 1025px) {
+    /* Desktop layout */
+    .tablet-row1, .tablet-row2, .mobile-date, .mobile-shift, .mobile-clock, .mobile-button {
+        display: none;
+    }
+    .desktop-row {
+        display: flex;
     }
 }
 
