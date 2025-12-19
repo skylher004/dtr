@@ -173,6 +173,7 @@ th, td{
 /* input[type="checkbox"]:checked {
     background-color: #000!important;
 } */
+ .date-box input[type="checkbox"]:checked::after,
 .roles input[type="checkbox"]:checked::after {
     content: "";
     position: absolute;
@@ -180,15 +181,20 @@ th, td{
     border-width: 2px 2px 0px 0;
     transform: rotate(134deg);
 }
+.date-box input[type="checkbox"]:checked::after, 
 .roles input[type="checkbox"]:checked::after {
-    left: 8px;
-    width: 4px;
-    height: 6px;
+    left: 2px;
+    width: 6px;
+    height: 4px;
+    margin-top: 1px;
+}
+.roles input[type="checkbox"]:checked::after {
+    left: 7px!important;
 }
 .date-box input[type="checkbox"]:checked::after {
-    left: 3px;
-    width: 4px;
-    height: 6px;
+    left: 2px;
+    width: 6px;
+    height: 4px;
 }
 .cols-table th,.cols-table td{
     border-right: 2px solid black;

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
+
 <body>
     <div class="box">
     <div class="row">
@@ -380,21 +381,13 @@ function parseCSVDate(str) {
     if (!str) return null;
     str = str.trim();
 
-    // Try DD/MM/YYYY or DD-MM-YYYY first
+    // DD/MM/YYYY or DD-MM-YYYY format
     const parts = str.split(/[-\/]/);
     if (parts.length === 3) {
-        let day = parseInt(parts[0], 10);
-        let month = parseInt(parts[1], 10) - 1; // zero-based
-        let year = parseInt(parts[2], 10);
-        let dateObj = new Date(year, month, day);
-        if (!isNaN(dateObj.getTime())) return dateObj;
-
-        // If invalid, try MM/DD/YYYY
-        month = parseInt(parts[0], 10) - 1;
-        day = parseInt(parts[1], 10);
-        year = parseInt(parts[2], 10);
-        dateObj = new Date(year, month, day);
-        if (!isNaN(dateObj.getTime())) return dateObj;
+        const day = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10) - 1; // zero-based month
+        const year = parseInt(parts[2], 10);
+        return new Date(year, month, day);
     }
     return null;
 }
