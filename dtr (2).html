@@ -11,7 +11,7 @@
     <div class="box">
     <div class="row">
         <span id="file-name" style="margin-left:10px;">No file selected</span>
-          <input id="file" type="file" accept=".csv" style="opacity:0; position:absolute; z-index:10; width:100px; height:40px;" />
+          <input id="file" type="file" accept=".csv" style="display:none;" />
          <div class="col">
             <button id="upload">UPLOAD</button>
             <button id="process">GENERATE</button>
@@ -19,73 +19,26 @@
             <button class="secondary" id="clear">Clear</button>
          </div>
     </div>
-    <div class="user-edit-inputs user-info-inputs">
-        <div class="form-row">
-            <div class="form-group">
-                <label for="inputStaffID">ID Number</label>
-                <input type="text" id="inputStaffID" placeholder="Enter Staff ID">
-            </div>
-            <div class="form-group">
-                <label for="inputStaffName">Employee Name</label>
-                <input type="text" id="inputStaffName" placeholder="Enter Staff Name">
-            </div>
-            <div class="form-group">
-                <label for="inputHubAssignment">Hub Assignment</label>
-                <input type="text" id="inputHubAssignment" placeholder="Enter Hub Assignment">
-            </div>
-            <div class="form-group">
-                <label for="inputMobileNumber">Mobile Number</label>
-                <input type="text" id="inputMobileNumber" placeholder="Enter Mobile Number">
-            </div>
-            <div class="form-group">
-                <label for="inputPeriodCoverage">Period Coverage</label>
-                <input type="text" id="inputPeriodCoverage" placeholder="Enter Period Coverage">
-            </div>
-        </div>
-    </div>
+    <div class="user-edit-inputs">
+  <label>ID Number: <input type="text" id="inputStaffID" placeholder="Enter Staff ID"></label>
+  <label>Employee Name: <input type="text" id="inputStaffName" placeholder="Enter Staff Name"></label>
+  <label>Hub Assignment: <input type="text" id="inputHubAssignment" placeholder="Enter Hub Assignment"></label>
+  <label>Mobile Number: <input type="text" id="inputMobileNumber" placeholder="Enter Mobile Number"></label>
+  <label>Period Coverage: <input type="text" id="inputPeriodCoverage" placeholder="Enter Period Coverage"></label>
+</div>
 
-    <div class="time-inputs">
-
-  <!-- Row container -->
-  <div class="time-row">
-
-    <!-- Date / Shift -->
-    <div class="group top-row">
-      <div class="form-group">
-        <label for="inputDate">Date</label>
-        <input type="text" id="inputDate" value="7" placeholder="e.g., 21/11/2025">
-      </div>
-      <div class="form-group">
-        <label for="inputShiftStart">Shift Start</label>
-        <input type="text" value="1AM" id="inputShiftStart">
-      </div>
-      <div class="form-group">
-        <label for="inputShiftEnd">Shift End</label>
-        <input type="text" value="10AM" id="inputShiftEnd">
-      </div>
-    </div>
-
-    <!-- Clock / Button -->
-    <div class="group bottom-row">
-      <div class="form-group">
-        <label for="inputClockIn">Clock In</label>
-        <input type="text" value="1:00" id="inputClockIn">
-      </div>
-      <div class="form-group">
-        <label for="inputClockOut">Clock Out</label>
-        <input type="text" value="10:01" id="inputClockOut">
-      </div>
-      <div class="form-group">
-        <button id="addRowBtn">Add Row</button>
-      </div>
-    </div>
-
-  </div>
+<div class="manual-time-input">
+  <label>Date: <input type="text" id="inputDate" value="7" placeholder="e.g., 21/11/2025"></label>
+  <label>Shift Start: <input type="text" value="1AM" id="inputShiftStart" placeholder="e.g., 1AM"></label>
+  <label>Shift End: <input type="text" value="10AM" id="inputShiftEnd" placeholder="e.g., 10AM"></label>
+  <label>Clock In: <input type="text" value="1:00" id="inputClockIn" placeholder="e.g., 1:00"></label>
+  <label>Clock Out: <input type="text" value="10:01" id="inputClockOut" placeholder="e.g., 10:00"></label>
+  <button id="addRowBtn">Add Row</button>
 </div>
 
 
-</div>
 
+    <div id="summary" class="note"></div>
     <div id="tableWrap"></div>
   </div>
     <div class="a4-container">
@@ -276,24 +229,7 @@ let attendanceJSON = [];
 $(function () {
 
   // Trigger file upload
-  $("#upload").on("click", function() {
-    $("#file")[0].click(); // Use DOM element, not jQuery object
-});
-
-$("#file").on("touchstart change", function(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    $("#file-name").text(file.name);
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const text = e.target.result;
-        processCSV(text); // move CSV processing to a separate function
-    };
-    reader.readAsText(file);
-});
-
+  $("#upload").on("click", () => $("#file").click());
 
   $("#file").on("change", function(e) {
     const file = e.target.files[0];
@@ -380,21 +316,13 @@ function parseCSVDate(str) {
     if (!str) return null;
     str = str.trim();
 
-    // Try DD/MM/YYYY or DD-MM-YYYY first
-    const parts = str.split(/[-\/]/);
+    // DD/MM/YYYY format
+    const parts = str.split("/");
     if (parts.length === 3) {
-        let day = parseInt(parts[0], 10);
-        let month = parseInt(parts[1], 10) - 1; // zero-based
-        let year = parseInt(parts[2], 10);
-        let dateObj = new Date(year, month, day);
-        if (!isNaN(dateObj.getTime())) return dateObj;
-
-        // If invalid, try MM/DD/YYYY
-        month = parseInt(parts[0], 10) - 1;
-        day = parseInt(parts[1], 10);
-        year = parseInt(parts[2], 10);
-        dateObj = new Date(year, month, day);
-        if (!isNaN(dateObj.getTime())) return dateObj;
+        const day = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10) - 1; // zero-based month
+        const year = parseInt(parts[2], 10);
+        return new Date(year, month, day);
     }
     return null;
 }
@@ -593,14 +521,15 @@ document.getElementById('print').addEventListener('click', () => {
 
 $(function() {
     const table = $(".time");
-    const footer = $(".time tr.footers");
+    const footer = $(".time tr.footer");
 
     // ===== Row Selection =====
-    table.on("click", "tr", function() {
-        if ($(this).hasClass("footer") || $(this).index() < 3) return; // skip footer & headers
+    table.on("click", "td", function() {
+        const tr = $(this).closest("tr");
+        if (tr.hasClass("footer") || tr.index() < 3) return; // skip footer & headers
 
         table.find("tr").removeClass("selected"); // remove previous highlight
-        $(this).addClass("selected");
+        tr.addClass("selected");
     });
 
     // Remove highlight when clicking outside
@@ -638,38 +567,17 @@ $(function() {
         });
     });
 
-   // ===== Add Row Manually =====
-$("#addRowBtn").on("click", function() {
-    const date = $("#inputDate").val();
-    const shiftStart = $("#inputShiftStart").val();
-    const shiftEnd = $("#inputShiftEnd").val();
-    const clockIn = $("#inputClockIn").val();
-    const clockOut = $("#inputClockOut").val();
+    // ===== Add Row Manually =====
+    $("#addRowBtn").on("click", function() {
+        const date = $("#inputDate").val();
+        const shiftStart = $("#inputShiftStart").val();
+        const shiftEnd = $("#inputShiftEnd").val();
+        const clockIn = $("#inputClockIn").val();
+        const clockOut = $("#inputClockOut").val();
 
-    if (!date && !shiftStart && !shiftEnd && !clockIn && !clockOut) return;
+        if (!date && !shiftStart && !shiftEnd && !clockIn && !clockOut) return;
 
-    const dataRows = table.find("tr").not(".footer").slice(3); // skip headers
-
-    let inserted = false;
-    dataRows.each(function() {
-        let isEmpty = true;
-        $(this).find("td").each(function() {
-            if ($(this).text().trim() !== "") isEmpty = false;
-        });
-        if (isEmpty && !inserted) {
-            const tds = $(this).find("td");
-            tds.eq(0).text(date);
-            tds.eq(1).text("");
-            tds.eq(2).text(shiftStart);
-            tds.eq(3).text(shiftEnd);
-            tds.eq(4).text(clockIn);
-            tds.eq(5).text(clockOut);
-            inserted = true;
-        }
-    });
-
-    if (!inserted) {
-        // No empty rows, append new row above footer
+        // Insert row above footer
         const newRow = $("<tr></tr>").html(`
             <td>${date}</td>
             <td class="border-right"></td>
@@ -680,73 +588,22 @@ $("#addRowBtn").on("click", function() {
             <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
         `);
         footer.before(newRow);
-    }
 
-    sortTableByDate();
-    $("#inputDate,#inputShiftStart,#inputShiftEnd,#inputClockIn,#inputClockOut").val("");
-});
+        sortTableByDate();
 
-// ===== Delete Selected Row =====
-$(document).on("keydown", function(e) {
-    if (e.key === "Delete") {
-        const selected = table.find("tr.selected");
-        if (selected.length) {
-            selected.remove();
-            // Add a new empty row to maintain 16 data rows
-            const newRow = $("<tr></tr>");
-            for (let i = 0; i < 14; i++) {
-                const td = $("<td></td>");
-                if (i === 1 || i === 7) {
-                    td.addClass("border-right");
-                }
-                newRow.append(td);
-            }
-            table.find("tr.footers").before(newRow);
-            e.preventDefault();
-        }
-    }
-});
-
-function normalizeRows() {
-    const dataRows = table.find("tr").not(".footer").slice(3);
-    const values = [];
-
-    // Collect ONLY text values
-    dataRows.each(function () {
-        const row = [];
-        let hasContent = false;
-
-        $(this).find("td").each(function () {
-            const text = $(this).text().trim();
-            row.push(text);
-            if (text !== "") hasContent = true;
-        });
-
-        if (hasContent) values.push(row);
+        // Clear input fields
+        $("#inputDate,#inputShiftStart,#inputShiftEnd,#inputClockIn,#inputClockOut").val("");
     });
 
-    // Clear all rows
-    dataRows.each(function () {
-        $(this).find("td").text("");
-    });
+    // ===== Delete Row Content =====
+    table.on("keydown", "td", function(e) {
+        const tr = $(this).closest("tr");
+        if (tr.hasClass("footer") || tr.index() < 3) return;
 
-    // Refill rows from top, up to available rows
-    values.forEach((row, i) => {
-        if (i < dataRows.length) {
-            row.forEach((text, col) => {
-                dataRows.eq(i).find("td").eq(col).text(text);
-            });
+        if (e.key === "Delete") {
+            tr.find("td").text("");
         }
     });
-
-    // Remove extra empty rows
-    for (let i = values.length; i < dataRows.length; i++) {
-        dataRows.eq(i).remove();
-    }
-}
-
-
-
 
     // ===== Sorting Function =====
     function sortTableByDate() {

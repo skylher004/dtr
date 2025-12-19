@@ -134,7 +134,7 @@ th, td{
     position: absolute;
     display: flex;
     flex-direction: column;
-    right: 65px;
+    right: 50px;
 }
 .roles label{
     font-size: 10pt;
@@ -173,12 +173,12 @@ th, td{
 /* input[type="checkbox"]:checked {
     background-color: #000!important;
 } */
-input[type="checkbox"]:checked::after {
+.roles input[type="checkbox"]:checked::after {
     content: "";
     position: absolute;
     border: solid #000;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
+    border-width: 2px 2px 0px 0;
+    transform: rotate(134deg);
 }
 .roles input[type="checkbox"]:checked::after {
     left: 8px;
@@ -204,8 +204,9 @@ input[type="checkbox"]:checked::after {
     padding: 0;
     height: 8px;
     line-height: 15px;
-    
-    
+}
+.user-table td{
+    height:18px;
 }
 
 /* table */
@@ -384,10 +385,7 @@ button.secondary{
 
 }
 
-* {
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
+
 
 .time-inputs {
   width: 100%;
@@ -411,7 +409,7 @@ button.secondary{
 }
 
 /* Inputs */
-input {
+.time-inputs input {
   width: 100%;
   padding: 8px 10px;
   font-size: 14px;
