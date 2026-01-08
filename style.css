@@ -391,79 +391,223 @@ button.secondary{
 
 }
 
+    /* Base wrapper to isolate styles */
+        .ts-container {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            box-sizing: border-box;
 
+            max-width: 1000px;
+            margin: 0 auto;
+            margin-bottom: 50px;
+             margin-top: -20px;
+            background: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
 
-.time-inputs {
-  width: 100%;
-}
+        .ts-container * {
+            box-sizing: border-box;
+        }
 
-.time-row {
-  display: flex;
-  flex-direction: column; /* stack rows by default */
-  gap: 12px;
-}
+        /* Unique Namespaced Classes */
+        .ts-row-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: flex-end;
+        }
 
-/* Groups */
-.group {
-  display: flex;
-  gap: 8px;
-  width: 100%;
-}
+        .ts-field-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 0; 
+        }
 
-.group .form-group {
-  flex: 1; /* equal width inside group */
-}
+        .ts-label {
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #4b5563;
+            text-transform: uppercase;
+            display: block;
+        }
 
-/* Inputs */
-.time-inputs input {
-  width: 100%;
-  padding: 8px 10px;
-  font-size: 14px;
-}
+        /* Seamless Input Box */
+        .ts-input-box {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            height: 40px;
+            transition: all 0.2s;
+            overflow: hidden;
+        }
 
-/* Button */
-button {
-  width: 100%;
-  padding: 8px 10px;
-  font-size: 14px;
-  cursor: pointer;
-}
+        .ts-input-box:focus-within {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
 
-/* ===== DESKTOP ===== */
-@media (min-width: 1025px) {
-  .time-row {
-    flex-direction: row; /* all in one row */
-  }
-  .top-row, .bottom-row {
-    flex-direction: row; /* both groups inline */
-  }
-}
+        .ts-input-field {
+            flex: 1;
+            border: none !important;
+            outline: none !important;
+            padding: 0 10px;
+            height: 100%;
+            font-size: 14px;
+            width: 100%;
+            background: transparent;
+        }
 
-/* ===== TABLET ===== */
-@media (max-width: 1024px) {
-  .time-row {
-    flex-direction: column; /* stack top/bottom rows */
-  }
+        .ts-period-select {
+            border: none !important;
+            outline: none !important;
+            background: #f9fafb;
+            height: 100%;
+            padding: 0 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+            border-left: 1px solid #d1d5db !important;
+            -webkit-appearance: none;
+            appearance: none;
+        }
 
-  .top-row, .bottom-row {
-    flex-direction: row; /* inputs inside row stay inline */
-  }
-}
+        .ts-add-btn {
+            height: 40px;
+            background: #059669;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            transition: background 0.2s;
+        }
 
-/* ===== MOBILE ===== */
-@media (max-width: 600px) {
-  .time-row {
-    flex-direction: column; /* stack rows */
-    gap: 12px;
-  }
+        .ts-add-btn:hover {
+            background: #047857;
+        }
 
-  .top-row, .bottom-row {
-    flex-direction: row; /* keep inputs inside groups side by side */
-    gap: 8px;
-  }
+        /* --- RESPONSIVE LOGIC --- */
 
-  /* Make sure button row takes full width */
-  .bottom-row .form-group:last-child {
-    flex: 1 1 100%;
-  }
-}
+        /* Tablet: 3 items per row */
+        @media (max-width: 992px) {
+            .ts-field-group {
+                flex: 1 1 calc(33.33% - 12px);
+            }
+        }
+
+        /* Mobile: 4 Row Layout */
+        @media (max-width: 600px) {
+            .ts-row-wrapper { gap: 8px; }
+
+            /* Row 1: Date */
+            .ts-field-group:nth-child(1) { flex: 1 1 100%; }
+
+            /* Row 2: Shift (2 Cols) */
+            .ts-field-group:nth-child(2), 
+            .ts-field-group:nth-child(3) { flex: 1 1 calc(50% - 4px); }
+
+            /* Row 3: Clock (2 Cols) */
+            .ts-field-group:nth-child(4), 
+            .ts-field-group:nth-child(5) { flex: 1 1 calc(50% - 4px); }
+
+            /* Row 4: Button */
+            .ts-field-group:last-child { 
+                flex: 1 1 100%; 
+                margin-top: 5px;
+            }
+
+            .ts-field-group:last-child .ts-label { display: none; }
+        }
+
+                /* Unique prefix dtr- to prevent CSS conflicts */
+        .dtr-box {
+            max-width: 1000px;
+            margin: 0 auto;
+            margin-top: 10px;
+            background: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Layout Structures */
+        .dtr-row, .dtr-user-info-inputs, .dtr-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .dtr-row {
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        /* Form Groups */
+        .dtr-form-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .dtr-label {
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .dtr-input-text {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        /* Buttons */
+        .dtr-btn {
+            padding: 10px 15px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+
+        .dtr-btn-secondary { background-color: #6c757d; }
+        .dtr-btn-add { background-color: #28a745; margin-top: auto; }
+
+        /* --- RESPONSIVE MEDIA QUERY --- */
+        @media (max-width: 768px) {
+            .dtr-row, .dtr-user-info-inputs, .dtr-group {
+                flex-direction: column; 
+                align-items: stretch;
+            }
+
+            .dtr-form-group {
+                width: 100%;
+            }
+
+            .dtr-col-actions {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            #file-name {
+                margin-left: 0 !important;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+        }

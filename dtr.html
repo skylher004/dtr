@@ -9,86 +9,43 @@
 </head>
 
 <body>
-    <div class="box">
-    <div class="row">
+<div class="dtr-box">
+    <div class="dtr-row">
         <span id="file-name" style="margin-left:10px;">No file selected</span>
-          <input id="file" type="file" accept=".csv" style="opacity:0; position:absolute; z-index:10; width:100px; height:40px;" />
-         <div class="col">
-            <button id="upload">UPLOAD</button>
-            <button id="process">GENERATE</button>
-            <button id="print">Print</button>
-            <button class="secondary" id="clear">Clear</button>
-         </div>
-    </div>
-    <div class="user-edit-inputs user-info-inputs">
-        <div class="form-row">
-            <div class="form-group">
-                <label for="inputStaffID">ID Number</label>
-                <input type="text" id="inputStaffID" placeholder="Enter Staff ID">
-            </div>
-            <div class="form-group">
-                <label for="inputStaffName">Employee Name</label>
-                <input type="text" id="inputStaffName" placeholder="Enter Staff Name">
-            </div>
-            <div class="form-group">
-                <label for="inputHubAssignment">Hub Assignment</label>
-                <input type="text" id="inputHubAssignment" placeholder="Enter Hub Assignment">
-            </div>
-            <div class="form-group">
-                <label for="inputMobileNumber">Mobile Number</label>
-                <input type="text" id="inputMobileNumber" placeholder="Enter Mobile Number">
-            </div>
-            <div class="form-group">
-                <label for="inputPeriodCoverage">Period Coverage</label>
-                <input type="text" id="inputPeriodCoverage" placeholder="Enter Period Coverage">
-            </div>
+        <input id="file" type="file" accept=".csv" style="opacity:0; position:absolute; z-index:10; width:100px; height:40px;" />
+        <div class="dtr-col-actions">
+            <button class="dtr-btn" id="upload">UPLOAD</button>
+            <button class="dtr-btn" id="print">Print</button>
+            <button class="dtr-btn dtr-btn-secondary" id="clear">Clear</button>
         </div>
     </div>
 
-    <div class="time-inputs">
-
-  <!-- Row container -->
-  <div class="time-row">
-
-    <!-- Date / Shift -->
-    <div class="group top-row">
-      <div class="form-group">
-        <label for="inputDate">Date</label>
-        <input type="text" id="inputDate" value="7" placeholder="e.g., 21/11/2025">
-      </div>
-      <div class="form-group">
-        <label for="inputShiftStart">Shift Start</label>
-        <input type="text" value="1AM" id="inputShiftStart">
-      </div>
-      <div class="form-group">
-        <label for="inputShiftEnd">Shift End</label>
-        <input type="text" value="10AM" id="inputShiftEnd">
-      </div>
+    <div class="dtr-user-info-inputs">
+        <div class="dtr-form-group">
+            <label class="dtr-label" for="inputStaffID">ID Number</label>
+            <input type="text" id="inputStaffID" class="dtr-input-text" placeholder="Enter Staff ID">
+        </div>
+        <div class="dtr-form-group">
+            <label class="dtr-label" for="inputStaffName">Employee Name</label>
+            <input type="text" id="inputStaffName" class="dtr-input-text" placeholder="Enter Staff Name">
+        </div>
+        <div class="dtr-form-group">
+            <label class="dtr-label" for="inputHubAssignment">Hub Assignment</label>
+            <input type="text" id="inputHubAssignment" class="dtr-input-text" placeholder="Enter Hub Assignment">
+        </div>
+        <div class="dtr-form-group">
+            <label class="dtr-label" for="inputMobileNumber">Mobile Number</label>
+            <input type="text" id="inputMobileNumber" class="dtr-input-text" placeholder="Enter Mobile Number">
+        </div>
+        <div class="dtr-form-group">
+            <label class="dtr-label" for="inputPeriodCoverage">Period Coverage</label>
+            <input type="text" id="inputPeriodCoverage" class="dtr-input-text" placeholder="Enter Period Coverage">
+        </div>
     </div>
-
-    <!-- Clock / Button -->
-    <div class="group bottom-row">
-      <div class="form-group">
-        <label for="inputClockIn">Clock In</label>
-        <input type="text" value="1:00" id="inputClockIn">
-      </div>
-      <div class="form-group">
-        <label for="inputClockOut">Clock Out</label>
-        <input type="text" value="10:01" id="inputClockOut">
-      </div>
-      <div class="form-group">
-        <button id="addRowBtn">Add Row</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-
 </div>
 
     <div id="tableWrap"></div>
-  </div>
+    </div>
     <div class="a4-container">
         <div class="content">
             <div class="header-logo">
@@ -268,8 +225,64 @@
             </div>
         </div>
         <div class="a4-background"></div>
+        
     </div>
+   
+<div class="ts-container">
+    <div class="ts-row-wrapper">
+        <div class="ts-field-group">
+            <label class="ts-label">Date</label>
+            <div class="ts-input-box">
+                <input type="text" id="inputDate" class="ts-input-field" placeholder="DD/MM/YYYY">
+            </div>
+        </div>
 
+        <div class="ts-field-group">
+            <label class="ts-label">Shift Start</label>
+            <div class="ts-input-box">
+                <input type="text" id="inputShiftStart" class="ts-input-field" value="08:00">
+                <select class="ts-period-select">
+                    <option>AM</option><option>PM</option><option>MN</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="ts-field-group">
+            <label class="ts-label">Shift End</label>
+            <div class="ts-input-box">
+                <input type="text" id="inputShiftEnd" class="ts-input-field" value="05:00">
+                <select class="ts-period-select">
+                    <option>AM</option><option>PM</option><option>MN</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="ts-field-group">
+            <label class="ts-label">Clock In</label>
+            <div class="ts-input-box">
+                <input type="text" id="inputClockIn" class="ts-input-field" value="08:05">
+                <select class="ts-period-select">
+                    <option>AM</option><option>PM</option><option>MN</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="ts-field-group">
+            <label class="ts-label">Clock Out</label>
+            <div class="ts-input-box">
+                <input type="text" id="inputClockOut" class="ts-input-field" value="05:10">
+                <select class="ts-period-select">
+                    <option>AM</option><option>PM</option><option>MN</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="ts-field-group">
+            <label class="ts-label" style="visibility: hidden;">Action</label>
+            <button class="ts-add-btn" id="addRowBtn">Add Row</button>
+        </div>
+    </div>
+</div>
 
 <script>
 let attendanceJSON = [];
@@ -631,28 +644,46 @@ $(function() {
         });
     });
 
-   // ===== Add Row Manually =====
 $("#addRowBtn").on("click", function() {
-    const date = $("#inputDate").val();
-    const shiftStart = $("#inputShiftStart").val();
-    const shiftEnd = $("#inputShiftEnd").val();
-    const clockIn = $("#inputClockIn").val();
-    const clockOut = $("#inputClockOut").val();
+    
+    // Function to safely get Input + Select value
+    function getCombinedValue(idSelector) {
+        const $input = $(idSelector);
+        
+        // Check if the element actually exists to avoid 'trim' error
+        if ($input.length === 0) return ""; 
 
+        const val = $input.val().trim();
+        if (!val) return "";
+
+        // Find the select inside the same parent 'ts-input-box'
+        const period = $input.closest('.ts-input-box').find('.ts-period-select').val();
+        
+        return val + " " + period;
+    }
+
+    const date       = $("#inputDate").val();
+    const shiftStart = getCombinedValue("#inputShiftStart");
+    const shiftEnd   = getCombinedValue("#inputShiftEnd");
+    const clockIn    = getCombinedValue("#inputClockIn");
+    const clockOut   = getCombinedValue("#inputClockOut");
+
+    // Exit if all inputs are empty
     if (!date && !shiftStart && !shiftEnd && !clockIn && !clockOut) return;
 
-    const dataRows = table.find("tr").not(".footer").slice(3); // skip headers
-
+    // --- Your Table Insertion Logic ---
+    const dataRows = table.find("tr").not(".footer").slice(3);
     let inserted = false;
+
     dataRows.each(function() {
         let isEmpty = true;
         $(this).find("td").each(function() {
             if ($(this).text().trim() !== "") isEmpty = false;
         });
+
         if (isEmpty && !inserted) {
             const tds = $(this).find("td");
             tds.eq(0).text(date);
-            tds.eq(1).text("");
             tds.eq(2).text(shiftStart);
             tds.eq(3).text(shiftEnd);
             tds.eq(4).text(clockIn);
@@ -662,7 +693,6 @@ $("#addRowBtn").on("click", function() {
     });
 
     if (!inserted) {
-        // No empty rows, append new row above footer
         const newRow = $("<tr></tr>").html(`
             <td>${date}</td>
             <td class="border-right"></td>
@@ -675,10 +705,10 @@ $("#addRowBtn").on("click", function() {
         footer.before(newRow);
     }
 
+    // Reset inputs but keep date for convenience
+    $("#inputShiftStart, #inputShiftEnd, #inputClockIn, #inputClockOut").val("");
     sortTableByDate();
-    $("#inputDate,#inputShiftStart,#inputShiftEnd,#inputClockIn,#inputClockOut").val("");
 });
-
 // ===== Delete Selected Row =====
 $(document).on("keydown", function(e) {
     if (e.key === "Delete") {

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Namespaced Time Sheet</title>
+    <style>
+        /* Base wrapper to isolate styles */
+        .ts-container {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            max-width: 1200px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-sizing: border-box;
+        }
+
+        .ts-container * {
+            box-sizing: border-box;
+        }
+
+        /* Unique Namespaced Classes */
+        .ts-row-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .ts-field-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 0; 
+        }
+
+        .ts-label {
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #4b5563;
+            text-transform: uppercase;
+            display: block;
+        }
+
+        /* Seamless Input Box */
+        .ts-input-box {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            height: 40px;
+            transition: all 0.2s;
+            overflow: hidden;
+        }
+
+        .ts-input-box:focus-within {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .ts-input-field {
+            flex: 1;
+            border: none !important;
+            outline: none !important;
+            padding: 0 10px;
+            height: 100%;
+            font-size: 14px;
+            width: 100%;
+            background: transparent;
+        }
+
+        .ts-period-select {
+            border: none !important;
+            outline: none !important;
+            background: #f9fafb;
+            height: 100%;
+            padding: 0 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+            border-left: 1px solid #d1d5db !important;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .ts-add-btn {
+            height: 40px;
+            background: #059669;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .ts-add-btn:hover {
+            background: #047857;
+        }
+
+        /* --- RESPONSIVE LOGIC --- */
+
+        /* Tablet: 3 items per row */
+        @media (max-width: 992px) {
+            .ts-field-group {
+                flex: 1 1 calc(33.33% - 12px);
+            }
+        }
+
+        /* Mobile: 4 Row Layout */
+        @media (max-width: 600px) {
+            .ts-row-wrapper { gap: 8px; }
+
+            /* Row 1: Date */
+            .ts-field-group:nth-child(1) { flex: 1 1 100%; }
+
+            /* Row 2: Shift (2 Cols) */
+            .ts-field-group:nth-child(2), 
+            .ts-field-group:nth-child(3) { flex: 1 1 calc(50% - 4px); }
+
+            /* Row 3: Clock (2 Cols) */
+            .ts-field-group:nth-child(4), 
+            .ts-field-group:nth-child(5) { flex: 1 1 calc(50% - 4px); }
+
+            /* Row 4: Button */
+            .ts-field-group:last-child { 
+                flex: 1 1 100%; 
+                margin-top: 5px;
+            }
+
+            .ts-field-group:last-child .ts-label { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="ts-container">
+    <div class="ts-row-wrapper">
+        <div class="ts-field-group">
+            <label class="ts-label">Date</label>
+            <div class="ts-input-box">
+                <input type="text" class="ts-input-field" placeholder="DD/MM/YYYY">
+            </div>
+        </div>
+
+        <div class="ts-field-group">
+            <label class="ts-label">Shift Start</label>
+            <div class="ts-input-box">
+                <input type="text" class="ts-input-field" value="08:00">
+                <select class="ts-period-select">
+                    <option>AM</option>
+                    <option>PM</option>
+                    <option>MN</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="ts-field-group">
+            <label class="ts-label">Shift End</label>
+            <div class="ts-input-box">
+                <input type="text" class="ts-input-field" value="05:00">
+                <select class="ts-period-select">
+                    <option>AM</option>
+                    <option>PM</option>
+                    <option>MN</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="ts-field-group">
+            <label class="ts-label">Clock In</label>
+            <div class="ts-input-box">
+                <input type="text" class="ts-input-field" value="08:05">
+                <select class="ts-period-select">
+                    <option>AM</option>
+                    <option>PM</option>
+                    <option>MN</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="ts-field-group">
+            <label class="ts-label">Clock Out</label>
+            <div class="ts-input-box">
+                <input type="text" class="ts-input-field" value="05:10">
+                <select class="ts-period-select">
+                    <option>AM</option>
+                    <option>PM</option>
+                    <option>MN</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="ts-field-group">
+            <label class="ts-label" style="visibility: hidden;">Action</label>
+            <button class="ts-add-btn" id="addRowBtn">Add Row</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
