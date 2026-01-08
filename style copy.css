@@ -1,0 +1,613 @@
+/* Define Calibri-like font stack */
+@font-face {
+    font-family: 'Calibri';
+    /* Use common sans-serif font stack with Calibri preference */
+    src: local('Calibri'), local('Corbel'), local('Candara'), local('Segoe UI'), sans-serif;
+    font-weight: normal;
+}
+@font-face {
+    font-family: 'Calibri';
+    src: local('Calibri Bold'), local('Corbel Bold'), local('Candara Bold'), local('Segoe UI Bold'), sans-serif;
+    font-weight: bold;
+}
+
+/* General Body Styling */
+body {
+    font-family: 'Calibri', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    
+}
+.user-table td[contenteditable="true"] {
+    border: none;         /* Remove table cell border (if any) */
+    outline: none;        /* Remove focus outline when editing */
+    background: transparent; /* optional: keep background same as table */
+    padding: inherit;     /* keep same padding as other cells */
+    font-weight: inherit; /* keep same font style */
+}
+
+/* --- A4 Container Styling (LANDSCAPE) --- */
+
+.a4-container {
+    /* Landscape: 297mm x 210mm */
+    width: 1123px;  
+    height: 794px; 
+    position: relative; 
+    margin: auto;
+    margin-top: -20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+    background-color: rgb(252, 252, 252); 
+    transform: scale(0.9); /* 120% size */
+}
+/* --- Background Image Styling --- */
+.a4-background {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    /* IMPORTANT: Use the actual reference ID for your uploaded image */
+    background-image: url('dtr.jpg'); 
+    position: absolute;
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-position: center center;
+    opacity: 0; 
+    z-index: 1;
+}
+.content{
+    position: relative;
+    z-index: 3;
+    padding: 30px 30px 0px 30px;
+}
+.header-logo{
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+.logo-1{
+    width: 138px;
+    margin-left: 1px;
+}
+.logo-1 img,
+.logo-2 img{
+    width: 100%;
+}
+.logo-2{
+    width: 183px;
+}
+.header-title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 50px;
+}
+.document-title,
+.agency-name{
+    font-size: 20pt;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    letter-spacing: 0.5px; /* adjust to your liking */
+}
+.address{
+    font-size: 10pt;
+    font-weight: bold;
+    margin-top: 3px;
+    letter-spacing: -0.3px; /* adjust to your liking */
+}
+.document-title{
+    margin-top: 16px;
+    letter-spacing: 0.7px; /* adjust to your liking */
+}
+.user-info-wrap{
+    display: flex;
+    flex-direction: row;
+    margin-top: 18px;
+}
+.user-table{
+    width: 890px;
+    font-weight: bold;
+    text-align: center;
+}
+.user-table th, .user-table td{
+    letter-spacing: 0.5px; /* adjust to your liking */
+    border-right: 2px solid black;
+}
+th, td{
+    font-family: 'Calibri', 'Corbel', 'Candara', 'Segoe UI', sans-serif;
+    font-weight: bold;
+}
+.user-table th{
+    font-size: 9pt;
+}
+.user-table td{
+    font-size: 12pt;
+    line-height: 12px;
+    padding-bottom: 3px;
+    text-transform: uppercase;
+}
+.ops{
+    font-size: 10pt!important;
+    letter-spacing: -0.2px!important;
+}
+.roles{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    right: 50px;
+}
+.roles label{
+    font-size: 10pt;
+    font-weight: bold;
+    margin-bottom: -3px;
+    
+}
+.roles input{
+    width: 15px;
+    height: 15px;
+    vertical-align: middle;
+    margin-right: 5px;
+    color: black;
+    border: 1px solid black;
+}
+
+.roles input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #000; /* ← kapal ng border */
+    border-radius: 2px;
+    cursor: pointer;
+}
+.date-box input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 1px solid #000; /* ← kapal ng border */
+    border-radius: 3px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+}
+/* input[type="checkbox"]:checked {
+    background-color: #000!important;
+} */
+ .date-box input[type="checkbox"]:checked::after,
+.roles input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    border: solid #000;
+    border-width: 2px 2px 0px 0;
+    transform: rotate(134deg);
+}
+.date-box input[type="checkbox"]:checked::after, 
+.roles input[type="checkbox"]:checked::after {
+    left: 2px;
+    width: 6px;
+    height: 4px;
+    margin-top: 1px;
+}
+.roles input[type="checkbox"]:checked::after {
+    left: 7px!important;
+}
+.date-box input[type="checkbox"]:checked::after {
+    left: 2px;
+    width: 6px;
+    height: 4px;
+}
+.cols-table th,.cols-table td{
+    border-right: 2px solid black;
+    text-align: center;
+    padding: 0;
+    height: 15px;
+
+    font-family: 'Calibri', 'Corbel', 'Candara', 'Segoe UI', sans-serif;
+    font-weight: bold;
+     text-align: center;
+    font-size: 10pt;
+    font-weight: bold;
+    padding: 0;
+    height: 8px;
+    line-height: 15px;
+}
+.user-table td{
+    height:18px;
+}
+
+/* table */
+.time, .user-table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 2px solid #000;
+}
+.time{
+    width: 100%;
+    margin-top: 32px;
+    opacity: 1;
+    font-size: 10pt;
+}
+.time th {
+    border: 1.5px solid #000;
+    text-align: center;
+    padding: 0;
+    height: 8px;
+    line-height: 15px;
+}
+.time td {
+    border: 1.5px solid #000;
+    text-align: center;
+    padding: 0;
+    height: 15.6px;
+    line-height: 16px;
+}
+.time tr.selected {
+    background-color: #cce5ff!important;
+}
+.border-bottom{
+    border-bottom: 2px solid #000!important;
+}
+.border{
+    border: 2px solid #000!important;
+}
+.border-right{
+    border-right: 2px solid #000!important;
+}
+.header {
+    background: #a7a7a7;
+    font-weight: bold;
+    padding: 0;
+  }
+  .subheader {
+    background: #bebebe;
+  }
+  .footer {
+    border: 2px solid #000!important;
+    text-align: right!important;
+    padding-right: 5px!important;
+  }
+.date-box input {
+    position: relative;
+    width: 15px;
+    height: 15px;
+    padding: 0;
+    margin-top: 2;
+    margin-bottom: 2px;
+    vertical-align: middle;
+  }
+  .content-footer{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-weight: 600;
+
+
+  }
+  .note{
+    margin-top: 25px;
+    margin-left: 5px;
+    font-size: 9pt;
+    letter-spacing: 0.2px;
+  }
+  .note-content{
+    margin-top: 4px;
+    margin-left: 18px;
+    line-height: 17px;
+  }
+  .note-content li {
+    padding-left: 7px;    /* space between "1." and text */
+}
+  .signature-box{
+    width: 365px;
+    height: 35px;
+    border: 2px solid black;
+    margin: auto;
+    margin-top: 5px;
+    text-align: center;
+    vertical-align: bottom;
+    white-space: nowrap;
+    margin-bottom: 15px;
+    padding-top: 15px;
+  }
+  .signature-box .label{
+    font-size: 10.5pt;
+    margin-top: 2px;
+  }
+  .label-name{
+    height: 15px;
+    line-height: 15px;
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+
+input[type=file]{display:block;margin:10px 0}
+button{
+    background:#2563eb;color:white;
+    border:0;padding:8px 12px;
+    border-radius:8px;
+    font-weight:500;
+    cursor:pointer
+}
+button.secondary{
+    background:#e5e7eb;
+    color:#111}
+.row{
+   
+    display:flex;
+    margin-top:12px;
+    justify-content:space-between;
+}
+.box{
+    width: 90%; 
+    margin: auto;
+
+}
+@media print {
+    body * {
+        visibility: hidden; /* hide everything on the page */
+       
+    }
+
+    .a4-container, .a4-container * {
+        visibility: visible; /* show only the A4 container */
+        
+    }
+
+    .a4-container {
+        
+        position: absolute;
+        left: 0;
+        top: 0;
+        transform: scale(1) !important; /* remove scaling for print */
+        box-shadow: none !important; /* remove shadows */
+        width: 1123px; 
+        height: 760px!important;
+        margin: 0;
+        margin-top: 0;
+        padding: 0;
+        
+    }
+
+    /* Hide other UI elements */
+    #file, #upload, #process, #print, #clear, #file-name {
+        display: none !important;
+    }
+
+    /* Ensure checkboxes print correctly */
+    input[type="checkbox"] {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+     .time th, .header, .subheader {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        background-color: #a7a7a7 !important; /* header bg color */
+    }
+
+    .subheader {
+        background-color: #bebebe !important; /* subheader bg color */
+    }
+  
+
+}
+
+    /* Base wrapper to isolate styles */
+        .ts-container {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            box-sizing: border-box;
+
+            max-width: 1000px;
+            margin: 0 auto;
+            margin-bottom: 50px;
+             margin-top: -20px;
+            background: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .ts-container * {
+            box-sizing: border-box;
+        }
+
+        /* Unique Namespaced Classes */
+        .ts-row-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .ts-field-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 0; 
+        }
+
+        .ts-label {
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #4b5563;
+            text-transform: uppercase;
+            display: block;
+        }
+
+        /* Seamless Input Box */
+        .ts-input-box {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            height: 40px;
+            transition: all 0.2s;
+            overflow: hidden;
+        }
+
+        .ts-input-box:focus-within {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .ts-input-field {
+            flex: 1;
+            border: none !important;
+            outline: none !important;
+            padding: 0 10px;
+            height: 100%;
+            font-size: 14px;
+            width: 100%;
+            background: transparent;
+        }
+
+        .ts-period-select {
+            border: none !important;
+            outline: none !important;
+            background: #f9fafb;
+            height: 100%;
+            padding: 0 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+            border-left: 1px solid #d1d5db !important;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .ts-add-btn {
+            height: 40px;
+            background: #059669;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .ts-add-btn:hover {
+            background: #047857;
+        }
+
+        /* --- RESPONSIVE LOGIC --- */
+
+        /* Tablet: 3 items per row */
+        @media (max-width: 992px) {
+            .ts-field-group {
+                flex: 1 1 calc(33.33% - 12px);
+            }
+        }
+
+        /* Mobile: 4 Row Layout */
+        @media (max-width: 600px) {
+            .ts-row-wrapper { gap: 8px; }
+
+            /* Row 1: Date */
+            .ts-field-group:nth-child(1) { flex: 1 1 100%; }
+
+            /* Row 2: Shift (2 Cols) */
+            .ts-field-group:nth-child(2), 
+            .ts-field-group:nth-child(3) { flex: 1 1 calc(50% - 4px); }
+
+            /* Row 3: Clock (2 Cols) */
+            .ts-field-group:nth-child(4), 
+            .ts-field-group:nth-child(5) { flex: 1 1 calc(50% - 4px); }
+
+            /* Row 4: Button */
+            .ts-field-group:last-child { 
+                flex: 1 1 100%; 
+                margin-top: 5px;
+            }
+
+            .ts-field-group:last-child .ts-label { display: none; }
+        }
+
+                /* Unique prefix dtr- to prevent CSS conflicts */
+        .dtr-box {
+            max-width: 1000px;
+            margin: 0 auto;
+            margin-top: 10px;
+            background: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Layout Structures */
+        .dtr-row, .dtr-user-info-inputs, .dtr-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .dtr-row {
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        /* Form Groups */
+        .dtr-form-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .dtr-label {
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .dtr-input-text {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        /* Buttons */
+        .dtr-btn {
+            padding: 10px 15px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+
+        .dtr-btn-secondary { background-color: #6c757d; }
+        .dtr-btn-add { background-color: #28a745; margin-top: auto; }
+
+        /* --- RESPONSIVE MEDIA QUERY --- */
+        @media (max-width: 768px) {
+            .dtr-row, .dtr-user-info-inputs, .dtr-group {
+                flex-direction: column; 
+                align-items: stretch;
+            }
+
+            .dtr-form-group {
+                width: 100%;
+            }
+
+            .dtr-col-actions {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            #file-name {
+                margin-left: 0 !important;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+        }
